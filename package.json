@@ -3,17 +3,21 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "open-next build --config open-next.config.ts --watch & wrangler dev",
     "build": "next build",
     "opennext": "open-next build --config open-next.config.ts",
-    "deploy": "npm run opennext && wranger deploy .open-next/worker",
+    "opennext:watch": "open-next build --config open-next.config.ts --watch",
+    "dev:worker": "wrangler dev",
+    "dev:local": "wrangler dev --local",
+    "deploy": "npm run opennext && wranger deploy",
     "start": "next start",
     "lint": "eslint"
   },
   "dependencies": {
-    "next": "15.5.2",
-    "react": "19.1.1",
-    "react-dom": "19.1.1"
+    "next": "^15.5.2",
+    "npm-run-all": "^4.1.5",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20250926.0",
@@ -25,6 +29,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.5.4",
+    "open-next": "^3.1.3",
     "tailwindcss": "^4",
     "typescript": "^5",
     "wrangler": "^4.40.1"
