@@ -1,0 +1,22 @@
+name = "idea-whiteboard"
+main = ".open-next/worker/index.mjs"
+compatibility_date = "2025-09-01"
+compatibility_flags = ["nodejs_compat"]
+
+[assets]
+directory = ".open-next/assets"
+
+[[durable_objects.bindings]]
+name = "ROOM_DO"
+class_name = "IdeaRoom"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "ideaboard"
+
+[[vectorize]]
+binding = "VECTORIZE"
+index_name = "ideas"
+
+[ai]
+binding = "AI"

@@ -36,6 +36,13 @@ export default function Page() {
     }
   };
 
+  const ideaKeyDown = (e: any) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      submit();
+    }
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-900 to-slate-950 text-slate-100">
       <header className="sticky top-0 z-10 border-b border-white/10 bg-slate-900/60 backdrop-b">
@@ -57,34 +64,50 @@ export default function Page() {
         </div>
       </header>
 
-      <main>
-        <section>
-          <div>Sticky Notes</div>
-          <div>
+      <main className="mx-auto grid max-w-6xl grid-cols-1 gap-4 p-4 md:grid-cols-[1fr_340px]">
+        <section className="min-h-[60vh] rounded-2xl border border-white/10 bg-white/5 p-4">
+          <div className="mb-2 text-sm uppercase tracking-wide text-slate-400">Sticky Notes</div>
+          <div className="grid grid-cols[repeat(auto-fill, minmax(220px, 1fr))] gap-3">
             {grouped.map((n: any) => (
               <NoteCard key={n.id} {...n} />
             ))}
           </div>
         </section>
 
-        <aside>
-          <div>
-            <div>Add Idea</div>
-            <textarea name="" id=""></textarea>
-            <div>
-              <button></button>
-              <button></button>
+        <aside className="flex flex-col gap-3">
+          <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+            <div className="mb-2 text-xs uppercase tracking-wide text-slate-400">Add Idea</div>
+            <textarea 
+              value={text}
+              onChange={(e) => setText(e.target.value)}
+              onKeyDown={(e) => ideaKeyDown(e)}
+              placeholder="Type an idea... (Enter to submit)"
+              className="h-28 w-full resize-y rounded-xl border border-white/10 bg-slate-900/70 p-3 outline-none placeholder:text-slate-500"
+            />
+            <div className="mt-3 flex items-center justify-between">
+              <button 
+                onClick={submit}
+                className="rounded-xl border border-transparent bg-blue-600 px-3 py-2 font-semibold hover:brightness-110 active:translate-y-[1px]"
+              >
+                Add Idea
+              </button>
+              <button
+                onClick={summarize}
+                className="rounded-xl border border-white/10 bg-slate-800 px-3 py-2 hover:bg-slate-700"
+              >
+                Summarize
+              </button>
             </div>
           </div>
 
-          <div>
-            <div>Summary</div>
-            <div>{summary || "No summary yet."}</div>
+          <div className="rounded-2xl border border-dashed border-white/15 bg-slate-900/50 p-4">
+            <div className="mb-2 text-xs uppercase tracking-wide text-slate-400">Summary</div>
+            <div className="whitespace-pre-wrap text-sm text-slate-200">{summary || "No summary yet."}</div>
           </div>
         </aside>
       </main>
 
-      <footer>sample footer</footer>
+      {/* <footer>sample footer</footer> */}
     </div>
   )
 }
