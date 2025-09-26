@@ -4,13 +4,14 @@ import React, { useMemo, useState } from "react";
 import { Pill } from "@/components/Pill";
 import { NoteCard } from "@/components/NoteCard";
 import { useRoomSocket } from "@/hooks/useRoomSocket";
+import type { Note } from "@/worker/types";
 
 export default function Page() {
   const [room, setRoom] = useState("default");
   const { status, notes, summary, setSummary, sendNote } = useRoomSocket(room);
   const [text, setText] = useState("");
 
-  const grouped = useMemo(() => notes, [notes]);
+  const grouped: Note[] = useMemo(() => notes, [notes]);
 
   const submit = () => {
     const t = text.trim();
@@ -68,7 +69,7 @@ export default function Page() {
         <section className="min-h-[60vh] rounded-2xl border border-white/10 bg-white/5 p-4">
           <div className="mb-2 text-sm uppercase tracking-wide text-slate-400">Sticky Notes</div>
           <div className="grid grid-cols[repeat(auto-fill, minmax(220px, 1fr))] gap-3">
-            {grouped.map((n: any) => (
+            {grouped.map((n) => (
               <NoteCard key={n.id} {...n} />
             ))}
           </div>

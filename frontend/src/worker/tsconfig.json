@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "lib": ["ES2022"],
+    "types": ["@cloudflare/workers-types"],
+    "strict": true,
+    "noEmit": true
+  },
+  "include": ["./**/*.ts", "./**/*.d.ts"]
+}
