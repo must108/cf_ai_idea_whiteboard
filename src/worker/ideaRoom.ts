@@ -110,9 +110,13 @@ export class IdeaRoom {
 
   private async listNotes(): Promise<Note[]> {
     const list = await this.state.storage.list<Note>({ prefix: "note:" });
-    const resultingList = [...list.values()].sort((a, b) => (b.ts ?? 0) - (a.ts ?? 0));
+   
+    const notes: Note[] = Array.from(list.values()).filter((v: any): v is Note =>
+      v && typeof v === "object" && typeof v.id === "string" && typeof v.text === "string"
+    );
 
-    return resultingList;
+    notes.sort((a, b) => (b.ts ?? 0) - (a.ts ?? 0));
+    return notes;
   }
 
   private async embedAndUpsert(note: Note) {

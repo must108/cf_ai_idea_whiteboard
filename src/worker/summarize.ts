@@ -1,0 +1,35 @@
+import type { Env } from ".";
+import type { Note } from "./ideaRoom";
+
+const CHAT_MODEL = "@cf/meta/llama-3.3-70b-instruct-fp8-fast";
+
+export async function summarizeRoom(env: Env, roomId: string, notes: Note[]): Promise<string> {
+    if (!notes.length) {
+        return "No ideas yet...";
+    }
+
+    const bulletList = notes
+        .map(n => `- ${sanitize(n.text)} (votes: ${n.votes ?? 0})`)
+        .join("\n");
+
+    const system = `You are an expert facilitator. 
+        Cluster ideas into 3-6 themes with short titles, then list
+        the top actionable next steps. Keep it under 180 words.`;
+    const user = `Room: ${roomId}\nIdeas:\n${bulletList}`;
+
+    const res: any = await env.AI.run(CHAT_MODEL, {
+        messages: [
+            { role: "system", content: system },
+            { role: "user", content: user },
+        ],
+        max_tokens: 320,
+        temperature: 0.2
+    });
+
+    const text = res?.response || res?.result?.response || res?.output_text || "Summary unavailable.";
+    return text.trim();
+}
+
+function sanitize(s: string) {
+    return s.replace(/\s_/g, " ").slice(0, 500);
+}
