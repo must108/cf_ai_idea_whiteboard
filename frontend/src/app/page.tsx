@@ -37,13 +37,17 @@ export default function Page() {
   };
 
   return (
-    <div>
-      <header>
-        <div>
-          <h1>Idea Whiteboard</h1>
-          <div>
-            <label>Room</label>
-            <select name="" id="">
+    <div className="min-h-screen bg-gradient-to-b from-slate-900 to-slate-950 text-slate-100">
+      <header className="sticky top-0 z-10 border-b border-white/10 bg-slate-900/60 backdrop-b">
+        <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3">
+          <h1 className="text-lg font-semibold">Idea Whiteboard</h1>
+          <div className="flex items-center gap-3">
+            <label className="text-xs text-slate-400">Room</label>
+            <select 
+              value={room} 
+              onChange={(e) => setRoom(e.target.value)} 
+              className="h-9 rounded-lg border border-white/19 bg-slate-800 px-2 text-sm"
+            >
               <option value="default">default</option>
               <option value="marketing">marketing</option>
               <option value="product">product</option>

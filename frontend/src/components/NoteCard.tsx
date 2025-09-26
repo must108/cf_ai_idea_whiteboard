@@ -2,9 +2,15 @@
 
 import React from 'react';
 
-export function NoteCard({ id, text, author, votes, ts }: { id: string, text: string, author?: string, votes?: number, ts?: number }) {
+export function NoteCard(
+    { id, text, author, votes, ts }: 
+    { 
+        id: string, text: string, author?: string, 
+        votes?: number, ts?: number 
+    }) {
 
-    const date = new Date(ts ?? Date.now()).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
+    const date = new Date(ts ?? Date.now())
+        .toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
 
     return (
         <div data-id={id} className="relative rounded-xl border border-white/10 bg-slate-800/60 p-3 shadow-xl">
