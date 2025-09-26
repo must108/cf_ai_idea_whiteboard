@@ -90,7 +90,7 @@ export class IdeaRoom {
             this.broadcast({ type: "vote", id: note.id, votes: note.votes });
           }
         }
-      } catch (err) {}
+      } catch {}
     });
 
     server.addEventListener("close", () => {
@@ -111,9 +111,12 @@ export class IdeaRoom {
   private async listNotes(): Promise<Note[]> {
     const list = await this.state.storage.list<Note>({ prefix: "note:" });
    
-    const notes: Note[] = Array.from(list.values()).filter((v: any): v is Note =>
-      v && typeof v === "object" && typeof v.id === "string" && typeof v.text === "string"
-    );
+    const notes: Note[] = Array.from(list.values()).filter((v: unknown): v is Note => {
+      if (!v || typeof v != "object") return false;
+      const n = v as Partial<Note>;
+
+      return typeof n.id === "string" && typeof n.text === "string" && typeof n.ts === "number";
+    });
 
     notes.sort((a, b) => (b.ts ?? 0) - (a.ts ?? 0));
     return notes;
@@ -136,6 +139,6 @@ export class IdeaRoom {
           },
         },
       ]);
-    } catch (e) {}
+    } catch {}
   }
 }

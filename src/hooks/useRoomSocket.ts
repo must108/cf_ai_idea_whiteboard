@@ -1,10 +1,11 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { Note } from "@/types/note";
 
 export function useRoomSocket(room: string) {
     const [status, setStatus] = useState<"connected" | "disconnected" | "error">("disconnected");
-    const [notes, setNotes] = useState<unknown[]>([]);
+    const [notes, setNotes] = useState<Note[]>([]);
     const [summary, setSummary] = useState<string>("");
 
     const wsRef = useRef<WebSocket | null>(null);
@@ -31,7 +32,7 @@ export function useRoomSocket(room: string) {
                 } else if (msg.type === "summary") {
                     setSummary(msg.text ?? "");
                 } else if (msg.type === "vote") {
-                    setNotes((prev) => prev.map((n: any) => n.id === msg.id ? { ...n, votes: msg.votes }: n));
+                    setNotes((prev) => prev.map((n: Note) => n.id === msg.id ? { ...n, votes: msg.votes }: n));
                 }
             } catch (err) {
                 console.error("WS message error", err);

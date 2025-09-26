@@ -1,17 +1,21 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { KeyboardEvent, useMemo, useState } from "react";
 import { Pill } from "@/components/Pill";
 import { NoteCard } from "@/components/NoteCard";
 import { useRoomSocket } from "@/hooks/useRoomSocket";
-import type { Note } from "@/worker/types";
+import type { Note } from "@/types/note";
+
+interface DataProps {
+  summary: string;
+}
 
 export default function Page() {
   const [room, setRoom] = useState("default");
   const { status, notes, summary, setSummary, sendNote } = useRoomSocket(room);
   const [text, setText] = useState("");
 
-  const grouped: Note[] = useMemo(() => notes, [notes]);
+  const grouped = useMemo(() => notes, [notes]);
 
   const submit = () => {
     const t = text.trim();
@@ -27,7 +31,7 @@ export default function Page() {
   const summarize = async () => {
     try {
       const res = await fetch(`/workflow/summarize?room=${encodeURIComponent(room)}`, { method: "POST" });
-      const data = await res.json();
+      const data: DataProps = await res.json();
 
       if (data?.summary) {
         setSummary(data.summary);
@@ -37,7 +41,7 @@ export default function Page() {
     }
   };
 
-  const ideaKeyDown = (e: any) => {
+  const ideaKeyDown = (e: KeyboardEvent) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       submit();
@@ -69,7 +73,7 @@ export default function Page() {
         <section className="min-h-[60vh] rounded-2xl border border-white/10 bg-white/5 p-4">
           <div className="mb-2 text-sm uppercase tracking-wide text-slate-400">Sticky Notes</div>
           <div className="grid grid-cols[repeat(auto-fill, minmax(220px, 1fr))] gap-3">
-            {grouped.map((n) => (
+            {grouped.map((n: Note) => (
               <NoteCard key={n.id} {...n} />
             ))}
           </div>
@@ -81,7 +85,7 @@ export default function Page() {
             <textarea 
               value={text}
               onChange={(e) => setText(e.target.value)}
-              onKeyDown={(e) => ideaKeyDown(e)}
+              onKeyDown={(e: KeyboardEvent) => ideaKeyDown(e)}
               placeholder="Type an idea... (Enter to submit)"
               className="h-28 w-full resize-y rounded-xl border border-white/10 bg-slate-900/70 p-3 outline-none placeholder:text-slate-500"
             />
