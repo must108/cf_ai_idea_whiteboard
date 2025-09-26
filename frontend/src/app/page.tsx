@@ -62,7 +62,25 @@ export default function Page() {
             ))}
           </div>
         </section>
+
+        <aside>
+          <div>
+            <div>Add Idea</div>
+            <textarea name="" id=""></textarea>
+            <div>
+              <button></button>
+              <button></button>
+            </div>
+          </div>
+
+          <div>
+            <div>Summary</div>
+            <div>{summary || "No summary yet."}</div>
+          </div>
+        </aside>
       </main>
+
+      <footer>sample footer</footer>
     </div>
   )
 }
