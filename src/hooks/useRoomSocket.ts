@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Note } from "@/types/note";
+import { Note } from "../types/note";
 
 export function useRoomSocket(room: string) {
     const [status, setStatus] = useState<"connected" | "disconnected" | "error">("disconnected");
@@ -9,10 +9,10 @@ export function useRoomSocket(room: string) {
     const [summary, setSummary] = useState<string>("");
 
     const wsRef = useRef<WebSocket | null>(null);
+    const ORIGIN = process.env.NEXT_PUBLIC_WORKER_ORIGIN || "";
 
     useEffect(() => {
-        const proto = typeof window !== "undefined" && window.location.protocol == "https:" ? "wss:" : "ws:";
-        const url = `${proto}//${window.location.host}/join?room=${encodeURIComponent(room)}`;
+        const url = `${ORIGIN.replace(/^http/, "ws")}/join?room=${encodeURIComponent(room)}`;
 
         const ws = new WebSocket(url);
         wsRef.current = ws;

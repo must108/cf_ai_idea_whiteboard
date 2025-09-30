@@ -5,11 +5,14 @@
   "scripts": {
     "dev": "open-next build --config open-next.config.ts --watch & wrangler dev",
     "build": "next build",
+    "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
+    "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
+    "upload": "opennextjs-cloudflare build && opennextjs-cloudflare upload",
+    "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts",
     "opennext": "open-next build --config open-next.config.ts",
     "opennext:watch": "open-next build --config open-next.config.ts --watch",
     "dev:worker": "wrangler dev",
     "dev:local": "wrangler dev --local",
-    "deploy": "npm run opennext && wranger deploy",
     "start": "next start",
     "lint": "eslint"
   },

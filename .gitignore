@@ -43,4 +43,5 @@ next-env.d.ts
 # cloudflare
 .open-next/
 .wrangler/
-wrangler.jsonc
+wrangler.json
+wrangler.toml

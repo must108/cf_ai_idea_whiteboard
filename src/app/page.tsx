@@ -1,10 +1,10 @@
 "use client";
 
 import React, { KeyboardEvent, useMemo, useState } from "react";
-import { Pill } from "@/components/Pill";
-import { NoteCard } from "@/components/NoteCard";
-import { useRoomSocket } from "@/hooks/useRoomSocket";
-import type { Note } from "@/types/note";
+import { NoteCard } from "../components/NoteCard";
+import { Pill } from "../components/Pill";
+import { useRoomSocket } from "../hooks/useRoomSocket";
+import type { Note } from "../types/note";
 
 interface DataProps {
   summary: string;
@@ -14,6 +14,8 @@ export default function Page() {
   const [room, setRoom] = useState("default");
   const { status, notes, summary, setSummary, sendNote } = useRoomSocket(room);
   const [text, setText] = useState("");
+
+  const ORIGIN = process.env.NEXT_PUBLIC_WORKER_ORIGIN || "";
 
   const grouped = useMemo(() => notes, [notes]);
 
@@ -30,7 +32,7 @@ export default function Page() {
 
   const summarize = async () => {
     try {
-      const res = await fetch(`/workflow/summarize?room=${encodeURIComponent(room)}`, { method: "POST" });
+      const res = await fetch(`${ORIGIN}/workflow/summarize?room=${encodeURIComponent(room)}`, { method: "POST" });
       const data: DataProps = await res.json();
 
       if (data?.summary) {
