@@ -9,11 +9,18 @@ export function useRoomSocket(room: string) {
     const [summary, setSummary] = useState<string>("");
 
     const wsRef = useRef<WebSocket | null>(null);
-    const ORIGIN = process.env.NEXT_PUBLIC_WORKER_ORIGIN || (typeof window !== "undefined" ? window.location.origin : "");
+    const ENV_ORIGIN = (process.env.NEXT_PUBLIC_WORKER_ORIGIN || "").trim();
 
     useEffect(() => {
-        const base = ORIGIN || "http://localhost:8787";
-        const url = `${base.replace(/^http(s?):/i, "ws$1:")}/join?room=${encodeURIComponent(room)}`;
+        const httpBase =
+        ENV_ORIGIN && /^https?:\/\//i.test(ENV_ORIGIN)
+            ? ENV_ORIGIN
+            : (typeof window !== "undefined" ? window.location.origin : "");
+
+        const u = new URL("/join", httpBase);
+        u.searchParams.set("room", room);
+        u.protocol = u.protocol.replace(/^http/i, "ws");
+        const url = u.toString();
 
         const ws = new WebSocket(url);
         wsRef.current = ws;
@@ -45,7 +52,7 @@ export function useRoomSocket(room: string) {
                 ws.close(); 
             } catch {} 
         };
-    }, [room, ORIGIN]);
+    }, [room, ENV_ORIGIN]);
 
     const sendNote = (text: string, author?: string) => {
         const ws = wsRef.current;
