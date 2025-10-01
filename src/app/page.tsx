@@ -75,7 +75,7 @@ export default function Page() {
       <main className="mx-auto grid max-w-6xl grid-cols-1 gap-4 p-4 md:grid-cols-[1fr_340px]">
         <section className="min-h-[60vh] rounded-2xl border border-white/10 bg-white/5 p-4">
           <div className="mb-2 text-sm uppercase tracking-wide text-slate-400">Sticky Notes</div>
-          <div className="grid grid-cols[repeat(auto-fill, minmax(220px, 1fr))] gap-3">
+            <div className="grid grid-cols-[repeat(auto-fill,_minmax(220px,_1fr))] gap-3">
             {grouped.map((n: Note) => (
               <NoteCard key={n.id} {...n} />
             ))}

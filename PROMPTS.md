@@ -12,3 +12,4 @@
 6. Asked for model name strings to input into worker code
 7. Generated system prompt for summarization, and max tokens and temperatures values.
 8. Fixed an error in listNotes() through AI debugging
+9. Helped with scripts in `package.json()` while developing infra.
