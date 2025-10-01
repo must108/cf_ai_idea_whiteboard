@@ -9,10 +9,11 @@ export function useRoomSocket(room: string) {
     const [summary, setSummary] = useState<string>("");
 
     const wsRef = useRef<WebSocket | null>(null);
-    const ORIGIN = process.env.NEXT_PUBLIC_WORKER_ORIGIN || "";
+    const ORIGIN = process.env.NEXT_PUBLIC_WORKER_ORIGIN || (typeof window !== "undefined" ? window.location.origin : "");
 
     useEffect(() => {
-        const url = `${ORIGIN.replace(/^http/, "ws")}/join?room=${encodeURIComponent(room)}`;
+        const base = ORIGIN || "http://localhost:8787";
+        const url = `${base.replace(/^http(s?):/i, "ws$1:")}/join?room=${encodeURIComponent(room)}`;
 
         const ws = new WebSocket(url);
         wsRef.current = ws;
@@ -28,7 +29,7 @@ export function useRoomSocket(room: string) {
                 if (msg.type === "init") {
                     setNotes(msg.notes ?? []);
                 } else if (msg.type === "note") {
-                    setNotes((prev) => [{ id: crypto.randomUUID(), votes: 0, ...msg}, ...prev]);
+                    setNotes((prev) => [{ ...msg } as Note, ...prev]);
                 } else if (msg.type === "summary") {
                     setSummary(msg.text ?? "");
                 } else if (msg.type === "vote") {
@@ -44,12 +45,12 @@ export function useRoomSocket(room: string) {
                 ws.close(); 
             } catch {} 
         };
-    }, [room]);
+    }, [room, ORIGIN]);
 
     const sendNote = (text: string, author?: string) => {
         const ws = wsRef.current;
 
-        if (!ws || ws.readyState !== 1) {
+        if (!ws || ws.readyState !== WebSocket.OPEN) {
             return;
         }
 
