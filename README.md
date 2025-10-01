@@ -71,9 +71,9 @@ wrangler dev --config ./wrangler.toml --port=8787
 npm install # (or preferred runtime)
 
 # set local backend url
-echo "NEXT_PUBLIC_WORKER_ORIGIN=http://127.0.0.1:8787" > dev.vars
+echo "NEXT_PUBLIC_WORKER_ORIGIN=http://127.0.0.1:8787" > .env.local
 
-npm run dev
+npm run dev:next
 ```
 
 ## Additional Information
