@@ -8,8 +8,8 @@ name = "ROOM_DO"
 class_name = "IdeaRoom"
 
 [[migrations]]
-tag = "v1"
-new_classes = ["IdeaRoom"]
+tag = "v2"
+new_sqlite_classes = ["IdeaRoom"]
 
 [[d1_databases]]
 binding = "DB"
