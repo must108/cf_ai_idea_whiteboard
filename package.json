@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "concurrently -k -n BUILD,WRANGLER -c blue,magenta \"opennextjs-cloudflare build --watch\" \"wait-on .open-next/worker.js && wrangler dev --port=8787\"",
+    "dev": "concurrently -k -n BUILD,WRANGLER -c blue,magenta \"opennextjs-cloudflare build --watch\" \"bash -lc 'wait-on .open-next/worker.js && until ls .open-next/server-functions/*/handler.mjs >/dev/null 2>&1; do sleep 0.2; done; wrangler dev --port=8787'\"",
     "build": "next build",
     "preview": "opennextjs-cloudflare preview --port=8787",
     "deploy": "opennextjs-cloudflare deploy",
@@ -23,7 +23,8 @@
     "npm": "^11.6.1",
     "npm-run-all": "^4.1.5",
     "react": "^19.1.1",
-    "react-dom": "^19.1.1"
+    "react-dom": "^19.1.1",
+    "react-markdown": "^10.1.0"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20250926.0",

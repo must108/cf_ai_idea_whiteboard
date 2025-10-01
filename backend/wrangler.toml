@@ -1,0 +1,24 @@
+name = "idea-whiteboard-backend"
+main = "src/index.ts"
+compatibility_date = "2025-09-01"
+compatibility_flags = ["nodejs_compat"]
+
+[[durable_objects.bindings]]
+name = "ROOM_DO"
+class_name = "IdeaRoom"
+
+[[migrations]]
+tag = "v1"
+new_classes = ["IdeaRoom"]
+
+[[d1_databases]]
+binding = "DB"
+database_name = "ideaboard"
+database_id = "6fb125fd-140c-4afa-bebc-2d87804df11a"
+
+[[vectorize]]
+binding = "VECTORIZE"
+index_name = "ideas"
+
+[ai]
+binding = "AI"

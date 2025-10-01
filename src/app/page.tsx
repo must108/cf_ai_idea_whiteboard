@@ -1,6 +1,7 @@
 "use client";
 
 import React, { KeyboardEvent, useMemo, useState } from "react";
+import ReactMarkdown from "react-markdown";
 import { NoteCard } from "../components/NoteCard";
 import { Pill } from "../components/Pill";
 import { useRoomSocket } from "../hooks/useRoomSocket";
@@ -109,12 +110,12 @@ export default function Page() {
 
           <div className="rounded-2xl border border-dashed border-white/15 bg-slate-900/50 p-4">
             <div className="mb-2 text-xs uppercase tracking-wide text-slate-400">Summary</div>
-            <div className="whitespace-pre-wrap text-sm text-slate-200">{summary || "No summary yet."}</div>
+            <div className="whitespace-pre-wrap text-sm text-slate-200">
+              <ReactMarkdown>{summary || "No summary yet."}</ReactMarkdown>
+            </div>
           </div>
         </aside>
       </main>
-
-      {/* <footer>sample footer</footer> */}
     </div>
   )
 }
