@@ -9,7 +9,7 @@ export function useRoomSocket(room: string) {
     const [summary, setSummary] = useState<string>("");
 
     const wsRef = useRef<WebSocket | null>(null);
-    const ENV_ORIGIN = (process.env.NEXT_PUBLIC_WORKER_ORIGIN || "").trim();
+    const ENV_ORIGIN = (process.env.NEXT_PUBLIC_WORKER_ORIGIN || "http://127.0.0.1:8787").trim();
 
     useEffect(() => {
         const httpBase =

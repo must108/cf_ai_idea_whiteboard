@@ -16,7 +16,7 @@ export default function Page() {
   const { status, notes, summary, setSummary, sendNote } = useRoomSocket(room);
   const [text, setText] = useState("");
 
-  const ORIGIN = process.env.NEXT_PUBLIC_WORKER_ORIGIN || "";
+  const ORIGIN = (process.env.NEXT_PUBLIC_WORKER_ORIGIN || "http://127.0.0.1:8787");
 
   const grouped = useMemo(() => notes, [notes]);
 
