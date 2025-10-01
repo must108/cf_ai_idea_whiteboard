@@ -53,6 +53,8 @@ cf_ai_idea_whiteboard/
 * Wrangler CLI
 * Cloudflare account, with Workers AI, D1, and Vectorize enabled.
 
+**Be sure to run the backend/frontend on different terminals!**
+
 ### Run Backend
 ```bash
 cd backend
