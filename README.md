@@ -4,6 +4,8 @@ An **AI-powered whiteboarding application** built on **Cloudflare workers**.
 
 Users can add sticky notes in realtime, upvote ideas, and generate AI summaries that summarize themes and suggest next steps for your team.
 
+View the app [here](https://idea-whiteboard.mustaeen18-b19.workers.dev/)!
+
 This project satifies the following requirements:
 * **LLM** - uses Llama 3.3 on **Workers AI** for summarizing text
 * **Workflow/Coordination** - A **Durable Object** (`Idearoom`) handles room state and coordination
