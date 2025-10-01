@@ -13,3 +13,5 @@
 7. Generated system prompt for summarization, and max tokens and temperatures values.
 8. Fixed an error in listNotes() through AI debugging
 9. Helped with scripts in `package.json()` while developing infra.
+10. Helped with some aspects of `README.md`.
+11. Helped with developing a script to ensure cross-platform support of project.
